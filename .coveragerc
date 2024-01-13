@@ -1,0 +1,9 @@
+[run]
+source =
+    ollama_python
+omit =
+    */tests/*
+    */site-packages/*
+
+[report]
+fail_under = 100
