@@ -19,7 +19,7 @@ class ModelManagementAPI(BaseAPI):
         model_file: Optional[str] = None,
         stream: bool = False,
         path: Optional[str] = None,
-    ) -> ResponsePayload | Generator:
+    ) -> Union[ResponsePayload, Generator]:
         """
         Create a model
         :param name: The name of the model
