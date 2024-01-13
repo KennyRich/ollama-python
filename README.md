@@ -69,6 +69,16 @@ result = api.generate_chat_completion(messages=messages, options=dict(num_tokens
 print(result.message)
 ```
 
+
+### Embeddings Endpoint
+#### Generate Embeddings
+```python
+from ollama_python.endpoints import EmbeddingAPI
+
+api = EmbeddingAPI(base_url="http://localhost:8000", model="mistral")
+result = api.get_embedding(prompt="Hello World", options=dict(seed=10))
+```
+
 ### Model Management Endpoints
 ####  Create a model
 ##### Without Streaming
@@ -139,9 +149,47 @@ api = ModelManagementAPI(base_url="http://localhost:8000")
 api.delete(name="mistral_copy")
 ```
 
+### Pull a model
+##### Without Streaming
+```python
+from ollama_python.endpoints import ModelManagementAPI
+
+api = ModelManagementAPI(base_url="http://localhost:8000")
+result = api.pull(name="mistral")
+print(result.status)
+```
+
+##### With Streaming
+```python
+from ollama_python.endpoints import ModelManagementAPI
+
+api = ModelManagementAPI(base_url="http://localhost:8000")
+for res in api.pull(name="mistral", stream=True):
+    print(res.status)
+```
+
+### Push a model
+##### Without Streaming
+```python
+from ollama_python.endpoints import ModelManagementAPI
+
+api = ModelManagementAPI(base_url="http://localhost:8000")
+result = api.push(name="mistral")
+print(result.status)
+```
+
+##### With Streaming
+```python
+from ollama_python.endpoints import ModelManagementAPI
+
+api = ModelManagementAPI(base_url="http://localhost:8000")
+for res in api.push(name="mistral", stream=True):
+    print(res.status)
+```
 
 
-### Valid Options
+
+### Valid Options/Parameters
 
 | Parameter      | Description                                                                                                                                                                                                                                             | Value Type | Example Usage        |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------------------- |
