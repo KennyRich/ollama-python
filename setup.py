@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ollama_python",
-    version="0.1.0",
+    version="0.1.1",
     author="Richard Ogunyale",
     author_email="kogunyale01@gmail.com",
     description="Python Wrapper around Ollama API Endpoints",
