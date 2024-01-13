@@ -1,6 +1,6 @@
 """Models for the OlLAMA generate endpoint"""
 from pydantic import BaseModel, Field, ConfigDict, Extra
-from typing import Optional, Literal
+from typing import Optional, Literal, Union
 
 
 class Message(BaseModel):
@@ -10,7 +10,9 @@ class Message(BaseModel):
         ..., description="The role of the message"
     )
     content: str = Field(..., description="The content of the message")
-    images: Optional[bytes | str] = Field(None, description="A base64-encoded image")
+    images: Optional[Union[bytes, str]] = Field(
+        None, description="A base64-encoded image"
+    )
 
     model_config = ConfigDict(extra=Extra.forbid)
 

@@ -9,6 +9,7 @@ from ollama_python.models.generate import (
     Message,
     StreamChatCompletion,
 )
+from typing import Union
 
 
 GENERATE_ENDPOINT = "/generate"
@@ -17,7 +18,7 @@ GENERATE_CHAT_ENDPOINT = "/chat"
 
 def mock_api_response(
     endpoint: str,
-    response_body: dict | list[dict],
+    response_body: Union[dict, list[dict]],
     status: int = 200,
     stream: bool = False,
 ):

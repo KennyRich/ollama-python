@@ -6,7 +6,7 @@ from ollama_python.models.generate import (
     Message,
     StreamChatCompletion,
 )
-from typing import BinaryIO, Optional, Generator
+from typing import BinaryIO, Optional, Generator, Union
 import requests
 import json
 
@@ -25,15 +25,15 @@ class GenerateAPI:
     def generate(
         self,
         prompt: str,
-        images: Optional[list[str | BinaryIO]] = None,
+        images: Optional[list[Union[str, BinaryIO]]] = None,
         options: Optional[dict] = None,
-        system: str | None = None,
+        system: Optional[str] = None,
         stream: bool = False,
-        format: str | None = None,
-        template: str | None = None,
+        format: Optional[str] = None,
+        template: Optional[str] = None,
         context: Optional[list[int]] = None,
         raw: bool = False,
-    ) -> Completion | Generator:
+    ) -> Union[Completion, Generator]:
         """
         Generate a completion using the given prompt
 
@@ -89,7 +89,7 @@ class GenerateAPI:
         options: Optional[dict] = None,
         template: Optional[str] = None,
         stream: bool = False,
-    ) -> ChatCompletion | Generator:
+    ) -> Union[ChatCompletion, Generator]:
         """
         Generate a completion using the given prompt
         :param messages: The list of messages e.g [{"role": "user", "content": "Hello"}]
