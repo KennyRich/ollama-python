@@ -1,5 +1,5 @@
 """Models for the OlLAMA generate endpoint"""
-from pydantic import BaseModel, Field, ConfigDict, Extra
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional, Literal, Union
 
 
@@ -14,7 +14,7 @@ class Message(BaseModel):
         None, description="A base64-encoded image"
     )
 
-    model_config = ConfigDict(extra=Extra.forbid)
+    model_config = ConfigDict(extra="forbid")
 
 
 class BaseCompletion(BaseModel):
@@ -147,4 +147,4 @@ class Options(BaseModel):
     rope_frequency_scale: Optional[float] = None
     num_thread: Optional[int] = None
 
-    model_config = ConfigDict(extra=Extra.forbid)
+    model_config = ConfigDict(extra="forbid")
