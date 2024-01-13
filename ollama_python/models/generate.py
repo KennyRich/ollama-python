@@ -10,8 +10,8 @@ class Message(BaseModel):
         ..., description="The role of the message"
     )
     content: str = Field(..., description="The content of the message")
-    images: Optional[Union[bytes, str]] = Field(
-        None, description="A base64-encoded image"
+    images: Optional[list[Union[bytes, str]]] = Field(
+        None, description="A list of base64-encoded images"
     )
 
     model_config = ConfigDict(extra="forbid")
@@ -52,7 +52,7 @@ class Completion(BaseCompletion):
 class ChatCompletion(BaseCompletion):
     """A completion returned by the OlLAMA generate Chat endpoint"""
 
-    messages: list[Message] = Field(..., description="The generated messages")
+    message: list[Message] = Field(..., description="The generated messages")
 
 
 class StreamCompletion(Completion):
@@ -85,7 +85,7 @@ class StreamCompletion(Completion):
 class StreamChatCompletion(ChatCompletion):
     """A completion result returned by the OlLAMA generate Chat endpoint when streaming the response"""
 
-    messages: Optional[list[Message]] = None
+    message: Optional[list[Message]] = None
 
     context: Optional[list[int]] = Field(
         None,

@@ -93,7 +93,7 @@ def test_generate_chat_completion_success_without_streaming(generate_api):
     result = {
         "model": "test-model",
         "created_at": "2023-08-04T19:22:45.499127Z",
-        "messages": [
+        "message": [
             {"role": "user", "content": "Hello"},
             {"role": "assistant", "content": "Hi"},
         ],
@@ -112,7 +112,7 @@ def test_generate_chat_completion_success_without_streaming(generate_api):
     )
 
     assert isinstance(completion, ChatCompletion)
-    assert completion.messages == [Message(**msg) for msg in result["messages"]]
+    assert completion.message == [Message(**msg) for msg in result["message"]]
     assert completion.done
     assert completion.model == result["model"]
 

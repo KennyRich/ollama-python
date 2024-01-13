@@ -92,7 +92,7 @@ def test_list_tags(model_management_api):
         ]
     }
     mock_api_response("/tags", result, request_type=responses.GET)
-    response = model_management_api.list_tags()
+    response = model_management_api.list_local_models()
 
     assert isinstance(response, ModelTagList)
     assert len(response.models) == 1
@@ -111,7 +111,7 @@ def test_list_tags(model_management_api):
 def test_list_tags_failure(model_management_api):
     with pytest.raises(HTTPError):
         mock_api_response("/tags", status=400, request_type=responses.GET)
-        model_management_api.list_tags()
+        model_management_api.list_local_models()
 
 
 @responses.activate

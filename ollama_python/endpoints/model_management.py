@@ -65,14 +65,14 @@ class ModelManagementAPI(BaseAPI):
 
         return self._post(endpoint=endpoint, parameters=None)
 
-    def list_tags(self) -> ModelTagList:
+    def list_local_models(self) -> ModelTagList:
         """
         List all tags
-        :return: A list of tags
+        :return: A list of local models
         """
         return self._get(endpoint="tags", return_type=ModelTagList)
 
-    def show(self, name: str) -> int:
+    def show(self, name: str) -> ModelInformation:
         """
         Show a model
         :param name: The name of the model to show
