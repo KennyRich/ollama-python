@@ -10,7 +10,7 @@ from ollama_python.models.model_management import (
 
 class ModelManagementAPI(BaseAPI):
     """
-    Initialize the Model Management API endpoint
+    A client for the model management endpoints
     """
 
     def create(
