@@ -6,7 +6,7 @@ The ollama python library provides the easiest way to integrate yout python proj
 This requires a python version of 3.9 or higher
 
 ```shell
-pip install ollama
+pip install ollama-python
 ```
 
 The python package splits the functionality into three core endpoints
