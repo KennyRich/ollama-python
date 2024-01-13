@@ -46,11 +46,24 @@ class BaseAPI:
         parameters: Optional[dict] = None,
         return_type: Optional[Callable] = None,
     ):
+        """
+        Send a POST request to the given endpoint
+        :param endpoint:
+        :param parameters:
+        :param return_type:
+        :return:
+        """
         response = requests.post(f"{self.base_url}/{endpoint}", json=parameters)
         response.raise_for_status()
         return return_type(**response.json()) if return_type else response.status_code
 
     def _get(self, endpoint: str, return_type: Optional[Callable] = None):
+        """
+        Send a GET request to the given endpoint
+        :param endpoint:
+        :param return_type:
+        :return:
+        """
         response = requests.get(f"{self.base_url}/{endpoint}")
         response.raise_for_status()
         return return_type(**response.json()) if return_type else response.status_code
