@@ -6,12 +6,11 @@ from ollama_python.models.generate import (
     Message,
     StreamChatCompletion,
 )
+from ollama_python.endpoints.base import BaseAPI
 from typing import BinaryIO, Optional, Generator, Union
-import requests
-import json
 
 
-class GenerateAPI:
+class GenerateAPI(BaseAPI):
     def __init__(self, model: str, base_url: str = "http://localhost:11434/api"):
         """
         Initialize the Generate API endpoint
@@ -19,8 +18,8 @@ class GenerateAPI:
         :param model: The model to use for generating completions
         :param base_url: The base URL of the API
         """
+        super().__init__(base_url=base_url)
         self.model = model
-        self.base_url = base_url
 
     def generate(
         self,
@@ -75,12 +74,13 @@ class GenerateAPI:
             parameters["format"] = format
 
         if stream:
-            return self._generate_with_stream(parameters, endpoint="generate")
+            return self._stream(
+                parameters=parameters, endpoint="generate", return_type=StreamCompletion
+            )
 
-        else:
-            response = requests.post(f"{self.base_url}/generate", json=parameters)
-            response.raise_for_status()
-            return Completion(**response.json())
+        return self._post(
+            parameters=parameters, endpoint="generate", return_type=Completion
+        )
 
     def generate_chat_completion(
         self,
@@ -120,21 +120,10 @@ class GenerateAPI:
             parameters["format"] = format
 
         if stream:
-            return self._generate_with_stream(parameters, endpoint="chat")
-        else:
-            response = requests.post(f"{self.base_url}/chat", json=parameters)
-            response.raise_for_status()
-            return ChatCompletion(**response.json())
+            return self._stream(
+                parameters=parameters, endpoint="chat", return_type=StreamChatCompletion
+            )
 
-    def _generate_with_stream(self, parameters: dict, endpoint: str) -> Generator:
-        with requests.post(
-            f"{self.base_url}/{endpoint}", json=parameters, stream=True
-        ) as response:
-            response.raise_for_status()
-
-            for line in response.iter_lines():
-                if line:
-                    resp = json.loads(line)
-                    yield StreamCompletion(
-                        **resp
-                    ) if endpoint == "generate" else StreamChatCompletion(**resp)
+        return self._post(
+            parameters=parameters, endpoint="chat", return_type=ChatCompletion
+        )
