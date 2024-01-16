@@ -18,17 +18,46 @@ class AsyncBaseApi(BaseAPI):
         :param parameters: The parameters to send
         :return: A generator that yields the response
         """
-        with self.session.post(
-            f"{self.base_url}/{endpoint}", json=parameters, stream=True
+        async with self.session.post(
+            f"{self.base_url}/{endpoint}",
+            json=parameters,
+            stream=True,
+            raise_for_status=True,
         ) as session:
-            session.raise_for_status()
-            for line in session.iter_lines():
+            async for line in session.iter_lines():
                 if line:
                     resp = json.loads(line)
                     yield return_type(**resp) if return_type else resp
 
-    async def _post():
-        pass
+    async def _post(
+        self,
+        endpoint: str,
+        parameters: Optional[dict] = None,
+        return_type: Optional[Callable] = None,
+    ):
+        """
+        Send a POST request to the given endpoint
+        :param endpoint:
+        :param parameters:
+        :param return_type:
+        :return:
+        """
+        async with self.session.post(
+            f"{self.base_url}/{endpoint}", json=parameters, raise_for_status=True
+        ) as session:
+            data = await session.json()
 
-    async def _get():
-        pass
+            return return_type(**data) if return_type else session.status
+
+    async def _get(self, endpoint: str, return_type: Optional[Callable] = None):
+        """
+        Send a GET request to the given endpoint
+        :param endpoint:
+        :param return_type:
+        :return:
+        """
+        async with self.session.get(
+            f"{self.base_url}/{endpoint}", raise_for_status=True
+        ) as session:
+            data = await session.json()
+            return return_type(**data) if return_type else session.status
