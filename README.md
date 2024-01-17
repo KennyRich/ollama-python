@@ -1,5 +1,5 @@
 # Ollama Python Library
-The ollama python library provides the easiest way to integrate yout python project with [Ollama](https://github.com/KennyRich/ollama-python)
+The ollama python library provides the easiest way to integrate your python project with [Ollama](https://github.com/KennyRich/ollama-python)
 
 
 ## Getting Started
