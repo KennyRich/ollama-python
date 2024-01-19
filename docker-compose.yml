@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ollama-python:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/ollama-python
+    stdin_open: true  # Keep container running
+    tty: true    
