@@ -18,9 +18,7 @@ class BaseAPI:
         :param base_url: The base URL to format
         :return: The formatted base URL
         """
-        if base_url.endswith("/"):
-            base_url = base_url[:-1]
-        return base_url
+        return base_url.removesuffix("/")
 
     def _stream(
         self, endpoint: str, parameters: dict, return_type: Optional[Callable] = None
